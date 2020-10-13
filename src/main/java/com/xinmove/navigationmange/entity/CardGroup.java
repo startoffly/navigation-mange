@@ -3,15 +3,17 @@ package com.xinmove.navigationmange.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
- * @Auther: CWT
+ * @Auther: startoffly
  * @Date: 2020/10/13 18:52
  * @Description:
  */
@@ -25,7 +27,7 @@ import java.io.Serializable;
 public class CardGroup implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     /**
      * 组名
      */
@@ -39,12 +41,21 @@ public class CardGroup implements Serializable {
      */
     private String description;
     /**
-     * 隐藏 0，可见 1
+     * 不隐藏 0，隐藏1
      */
+    @Column(nullable = false)
     private int hide;
     /**
      * 排序
      */
+    @Column(name = "rank", nullable = false)
     private int rank;
+
+    /**
+     * 组与卡片
+     */
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "cardGroup")
+    @Cascade(value= {CascadeType.ALL}) //设定级联关系
+    private List<Card> cardList;
 
 }
