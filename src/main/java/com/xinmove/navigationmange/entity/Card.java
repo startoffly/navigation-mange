@@ -4,6 +4,8 @@ import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,6 +21,7 @@ import java.util.Date;
 @AllArgsConstructor
 //使用后添加一个无参构造函数
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Card {
 
     @Id
@@ -28,6 +31,8 @@ public class Card {
     private String name;
 
     private String description;
+
+    private String url;
 
     private String img;
 
@@ -44,10 +49,44 @@ public class Card {
     @CreatedDate
     private Date createAt;
 
+    @Column(name = "update_at")
+    @LastModifiedDate
+    private Date updateAt;
+
 
     @ManyToOne
-    @JoinColumn(name="cardGroupId")
-    @Cascade(CascadeType.ALL)
+    @JoinColumn(name = "gid")
     private CardGroup cardGroup;
 
+    public Card(String name, String description, String url, String img, int hide, int rank, CardGroup cardGroup) {
+        this.name = name;
+        this.description = description;
+        this.url = url;
+        this.img = img;
+        this.hide = hide;
+        this.rank = rank;
+        this.cardGroup = cardGroup;
+    }
+
+    public Card(Long id, String name, String description, String url, String img, int hide, int rank) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.url = url;
+        this.img = img;
+        this.hide = hide;
+        this.rank = rank;
+    }
+
+    public Card(Long id, String name, String description, String url, String img, int hide, int rank,
+                CardGroup cardGroup) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.url = url;
+        this.img = img;
+        this.hide = hide;
+        this.rank = rank;
+        this.cardGroup = cardGroup;
+    }
 }
