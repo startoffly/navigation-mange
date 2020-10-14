@@ -3,6 +3,7 @@ package com.xinmove.navigationmange.service.impl;
 import com.xinmove.navigationmange.dao.CardGroupRepository;
 import com.xinmove.navigationmange.entity.CardGroup;
 import com.xinmove.navigationmange.service.CardGroupService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
@@ -13,6 +14,7 @@ import java.util.Optional;
  * @Date: 2020/10/13 21:40
  * @Description:
  */
+@Service
 public class CardGroupServiceImpl implements CardGroupService {
 
     @Resource
@@ -28,7 +30,7 @@ public class CardGroupServiceImpl implements CardGroupService {
     @Override
     public void pushCardGroupTop(int cardGroupId) {
         int maxRank = cardGroupRepository.findMaxRank();
-        cardGroupRepository.updateCardGroupRankById(cardGroupId,cardGroupId);
+        cardGroupRepository.updateCardGroupRankById(cardGroupId,maxRank);
     }
 
     @Transactional

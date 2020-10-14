@@ -3,6 +3,8 @@ package com.xinmove.navigationmange.service;
 import com.xinmove.navigationmange.entity.Card;
 import com.xinmove.navigationmange.entity.CardGroup;
 
+import java.util.List;
+
 /**
  * @Auther: startoffly
  * @Date: 2020/10/13 20:21
@@ -15,6 +17,8 @@ public interface CardService {
      * @param card
      */
     void saveCard(Card card);
+
+    void saveCardAll(List<Card> cards);
 
     /**
      * 根据id覆盖更新一张导航卡

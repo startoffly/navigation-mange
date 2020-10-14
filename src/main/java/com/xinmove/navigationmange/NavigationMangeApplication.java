@@ -5,6 +5,7 @@ import com.xinmove.navigationmange.dao.CardRepository;
 import com.xinmove.navigationmange.entity.Card;
 import com.xinmove.navigationmange.entity.CardGroup;
 import com.xinmove.navigationmange.service.CardGroupService;
+import com.xinmove.navigationmange.service.CardService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,7 +20,7 @@ public class NavigationMangeApplication {
 
     //打包时
 //    @Bean
-    InitializingBean saveData(CardGroupService cardGroupService){
+    InitializingBean saveData(CardGroupService cardGroupService, CardService cardService){
         return ()->{
             //初始化些测试数据
             CardGroup cardGroup0 = new CardGroup(0,"默认分组","fa fa-clone","这是一个默认分组",0,0);
@@ -34,15 +35,10 @@ public class NavigationMangeApplication {
             cards.add(new Card("星幕之家","扫把的个人站","www.xinmove.com","www.xinmove.com/favicon.ico",0,0,cardGroup1));
             cards.add(new Card("星幕之家","扫把的个人站","www.xinmove.com","www.xinmove.com/favicon.ico",0,0,cardGroup2));
             cards.add(new Card("百度","百度充填","www.baidu.com",null,0,0,cardGroup0));
-            cards.add(new Card("百度","百度充填","www.baidu.com",null,0,0,cardGroup0));
-            cards.add(new Card("百度","百度充填","www.baidu.com",null,0,0,cardGroup0));
-            cards.add(new Card("百度","百度充填","www.baidu.com",null,0,0,cardGroup0));
-            cards.add(new Card("百度","百度充填","www.baidu.com",null,0,0,cardGroup0));
-            cards.add(new Card("百度","百度充填","www.baidu.com",null,0,0,cardGroup0));
-
-
-
-
+            cards.add(new Card("百度","百度充填","www.baidu.com",null,0,0,cardGroup1));
+            cards.add(new Card("百度","百度充填","www.baidu.com",null,0,0,cardGroup2));
+            cards.add(new Card("百度","百度充填","www.baidu.com",null,0,0,cardGroup2));
+            cardService.saveCardAll(cards);
 
         };
     }
