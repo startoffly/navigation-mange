@@ -6,6 +6,7 @@ import com.xinmove.navigationmange.service.CardGroupService;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 /**
  * @Auther: startoffly
@@ -30,8 +31,15 @@ public class CardGroupServiceImpl implements CardGroupService {
         cardGroupRepository.updateCardGroupRankById(cardGroupId,cardGroupId);
     }
 
+    @Transactional
     @Override
-    public void exchangeCardGroupRank(Long cardGroupId1, Long cardGroupId2) {
+    public void exchangeCardGroupRank(Integer cardGroupId1, Integer cardGroupId2) {
+        Optional<CardGroup> cardGroup1 = cardGroupRepository.findByGid(cardGroupId1);
+        Optional<CardGroup> cardGroup2 = cardGroupRepository.findByGid(cardGroupId2);
+        if (cardGroup1.isPresent()&&cardGroup2.isPresent()){
+            cardGroupRepository.updateCardGroupRankById(cardGroup1.get().getGid(),cardGroup2.get().getRank());
+            cardGroupRepository.updateCardGroupRankById(cardGroup2.get().getGid(),cardGroup1.get().getRank());
+        }
 
     }
 }

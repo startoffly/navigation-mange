@@ -27,5 +27,5 @@ public interface CardGroupService {
      * @param cardGroupId1 组id1
      * @param cardGroupId2 组id2
      */
-    void exchangeCardGroupRank(Long cardGroupId1,Long cardGroupId2);
+    void exchangeCardGroupRank(Integer cardGroupId1,Integer cardGroupId2);
 }
