@@ -6,6 +6,7 @@ import com.xinmove.navigationmange.controller.vo.ReturnBody;
 import com.xinmove.navigationmange.entity.CardGroup;
 import com.xinmove.navigationmange.service.CardGroupService;
 import com.xinmove.navigationmange.service.CardService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class TestController {
     @GetMapping(value = "/getHeadInfo")
     public ReturnBody getHeadInfo(){
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("title","Get异步标题");
+        jsonObject.put("title","星幕之家");
         jsonObject.put("keywords","Get异步关键词 1 2 3");
         jsonObject.put("description","Get异步简介");
         jsonObject.put("author","startoffly");
@@ -50,13 +51,13 @@ public class TestController {
 
     @CrossOrigin
     @ResponseBody
-    @GetMapping(value = "/getHomeInfo")
-    public ReturnBody getHomeInfo(){
+    @GetMapping(value = "/getCardsByGroup")
+    public ReturnBody getHomeInfo(@Param("gids")int[] gids){
         List<CardGroupOutVo> cardGroupOutVos = new ArrayList<>();
-        Optional<CardGroup> cardGroupOptional1 = cardGroupService.findOne(2);//自身项目
-        Optional<CardGroup> cardGroupOptional2 = cardGroupService.findOne(3);//高频
-        cardGroupOutVos.add(cardGroupOptional1.map(CardGroupOutVo::new).orElseGet(() -> new CardGroupOutVo(1)));
-        cardGroupOutVos.add(cardGroupOptional2.map(CardGroupOutVo::new).orElseGet(() -> new CardGroupOutVo(1)));
+        for (int gid : gids) {
+            Optional<CardGroup> cardGroupOptional1 = cardGroupService.findOne(gid);
+            cardGroupOutVos.add(cardGroupOptional1.map(CardGroupOutVo::new).orElseGet(() -> new CardGroupOutVo(1)));
+        }
         return ReturnBody.success(cardGroupOutVos);
     }
 

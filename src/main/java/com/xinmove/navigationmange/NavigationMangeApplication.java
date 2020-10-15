@@ -41,8 +41,8 @@ public class NavigationMangeApplication {
                     groupsD.add(cardGroupService.findOne(i).get());
                 }
                 List<Card> cards = new ArrayList<>();
-                cards.add(new Card("星幕之家","扫把的个人站","www.xinmove.com","www.xinmove.com/favicon.ico",0,0,groupsD));
-                cards.add(new Card("百度","百度充填","www.baidu.com",null,0,0,groupsD));
+                cards.add(new Card("星幕之家","扫把的个人站","http://www.xinmove.com","http://www.xinmove.com/favicon.ico",0,0,groupsD));
+                cards.add(new Card("百度","百度充填","http://www.baidu.com","https://www.baidu.com/favicon.ico",0,0,groupsD));
                 cardService.saveCardAll(cards);
             }else {
                 logger.info("检测到已有数据，跳过初始化");
