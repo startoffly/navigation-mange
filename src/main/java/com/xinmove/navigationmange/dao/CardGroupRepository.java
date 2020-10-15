@@ -21,7 +21,7 @@ public interface CardGroupRepository extends JpaRepository<CardGroup,Integer> {
 
     void deleteByGid(Integer integer);
 
-    @Query("SELECT MAX(c.rank) from  CardGroup c")
+    @Query("SELECT COALESCE(MAX(c.rank),0) from  CardGroup c")
     int findMaxRank();
 
     /**

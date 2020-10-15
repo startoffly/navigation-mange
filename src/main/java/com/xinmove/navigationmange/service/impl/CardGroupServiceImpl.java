@@ -1,8 +1,11 @@
 package com.xinmove.navigationmange.service.impl;
 
 import com.xinmove.navigationmange.dao.CardGroupRepository;
+import com.xinmove.navigationmange.entity.Card;
 import com.xinmove.navigationmange.entity.CardGroup;
 import com.xinmove.navigationmange.service.CardGroupService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,8 +20,19 @@ import java.util.Optional;
 @Service
 public class CardGroupServiceImpl implements CardGroupService {
 
+    private static final Logger logger = LogManager.getLogger(CardGroupServiceImpl.class);
     @Resource
     CardGroupRepository cardGroupRepository;
+
+    @Override
+    public long count() {
+        return cardGroupRepository.count();
+    }
+
+    @Override
+    public Optional<CardGroup> findOne(int gid){
+        return cardGroupRepository.findByGid(gid);
+    }
 
     @Override
     public void saveCardGroup(CardGroup cardGroup) {

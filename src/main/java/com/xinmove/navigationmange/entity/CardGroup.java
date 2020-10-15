@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @Auther: startoffly
  * @Date: 2020/10/13 18:52
- * @Description:
+ * @Description: 分组
  */
 //@Entity注解加在实体类上，定义对象将会成为被JPA管理的实体，将映射到指定的数据库。@Table注解用来说明该实体类对应的表和数据库，其中name =“xxx"，用来表示数据表的名字，catalog = “xxx"是数据库的名字
 @Entity
@@ -64,8 +64,10 @@ public class CardGroup implements Serializable {
 
     /**
      * 组与卡片
+     * 删除组时会将 卡片关系设为空
      */
-    @OneToMany(cascade= {CascadeType.REMOVE},mappedBy="cardGroup",fetch = FetchType.EAGER) //设定级联关系
+    @ManyToMany(mappedBy = "cardGroupList",fetch = FetchType.EAGER)
+    @OrderBy("rank desc")
     private List<Card> cardList;
 
     public CardGroup(Integer gid, String name, String icon, String description, int hide, int rank) {

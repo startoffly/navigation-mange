@@ -15,18 +15,10 @@ import java.util.Optional;
 public interface CardRepository extends JpaRepository<Card,Long> {
 
     /**
-     * 获取一个组 的导航卡
-     * @param cardGroupId 组id
-     * @param hide 是否隐藏
-     * @return
-     */
-    List<Card> findByCardGroup_GidAndHideOrderByRankDesc(Integer cardGroupId,Integer hide);
-
-    /**
      * 获取当前最大rank
      * @return
      */
-    @Query("SELECT MAX(c.rank) from  Card c")
+    @Query("SELECT COALESCE(MAX(c.rank),0) from  Card c")
     int findMaxRank();
 
     Optional<Card> findByName(String name);
@@ -36,16 +28,6 @@ public interface CardRepository extends JpaRepository<Card,Long> {
 
     @Override
     void deleteAll();
-
-    /**
-     * 更改导航卡的分组
-     * @param id 卡id
-     * @param cardGroup 卡分组
-     */
-    @Transactional
-    @Modifying
-    @Query("UPDATE Card c SET c.cardGroup = ?2 WHERE c.id = ?1")
-    int updateCardCardGroupTypeById(Long id, CardGroup cardGroup);
 
     /**
      * @param id 卡id

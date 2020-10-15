@@ -1,14 +1,14 @@
 package com.xinmove.navigationmange.entity;
 
 import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @Auther: startoffly
@@ -53,19 +53,32 @@ public class Card {
     @LastModifiedDate
     private Date updateAt;
 
+    @JoinTable(name="sys_card_card_group",
+            joinColumns={@JoinColumn(name="card_id", referencedColumnName="id")},
+            inverseJoinColumns={@JoinColumn(name="card_group_id", referencedColumnName="gid")})
+    @ManyToMany(fetch = FetchType.EAGER)
+    @OrderBy("rank desc")
+    private List<CardGroup> cardGroupList;
 
-    @ManyToOne
-    @JoinColumn(name = "gid")
-    private CardGroup cardGroup;
 
-    public Card(String name, String description, String url, String img, int hide, int rank, CardGroup cardGroup) {
+    public Card(String name, String description, String url, String img, int hide, int rank) {
         this.name = name;
         this.description = description;
         this.url = url;
         this.img = img;
         this.hide = hide;
         this.rank = rank;
-        this.cardGroup = cardGroup;
+    }
+
+    public Card(String name, String description, String url, String img, int hide, int rank,
+                List<CardGroup> cardGroupList) {
+        this.name = name;
+        this.description = description;
+        this.url = url;
+        this.img = img;
+        this.hide = hide;
+        this.rank = rank;
+        this.cardGroupList = cardGroupList;
     }
 
     public Card(Long id, String name, String description, String url, String img, int hide, int rank) {
@@ -79,7 +92,7 @@ public class Card {
     }
 
     public Card(Long id, String name, String description, String url, String img, int hide, int rank,
-                CardGroup cardGroup) {
+                List<CardGroup> cardGroupList) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -87,6 +100,6 @@ public class Card {
         this.img = img;
         this.hide = hide;
         this.rank = rank;
-        this.cardGroup = cardGroup;
+        this.cardGroupList = cardGroupList;
     }
 }

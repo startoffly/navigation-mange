@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface CardService {
 
+    long count();
+
     /**
      * 添加一张导航卡
      * @param card
@@ -28,12 +30,22 @@ public interface CardService {
     int updateCardById(Card card);
 
     /**
-     * 修改导航卡的分组
+     * 增加导航卡的分组
      * @param cardId
      * @param cardGroup
      * @return
      */
-    int updateCardAboutCardGroupById(Long cardId,CardGroup cardGroup);
+    int addCardAboutCardGroupById(Long cardId,CardGroup cardGroup);
+
+    /**
+     * 删除导航卡的分组
+     * @param cardId
+     * @param cardGroup
+     * @return
+     */
+    int deleteCardAboutCardGroupById(Long cardId,CardGroup cardGroup);
+
+
 
     /**
      * 置顶

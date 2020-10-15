@@ -1,12 +1,18 @@
 package com.xinmove.navigationmange.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xinmove.navigationmange.controller.vo.CardGroupOutVo;
 import com.xinmove.navigationmange.controller.vo.ReturnBody;
+import com.xinmove.navigationmange.entity.CardGroup;
+import com.xinmove.navigationmange.service.CardGroupService;
+import com.xinmove.navigationmange.service.CardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Auther: startoffly
@@ -17,6 +23,11 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/test")
 public class TestController {
+
+    @Resource
+    private CardService cardService;
+    @Resource
+    private CardGroupService cardGroupService;
 
     @CrossOrigin
     @ResponseBody
@@ -41,7 +52,12 @@ public class TestController {
     @ResponseBody
     @GetMapping(value = "/getHomeInfo")
     public ReturnBody getHomeInfo(){
-        return ReturnBody.success(getTestCards());
+        List<CardGroupOutVo> cardGroupOutVos = new ArrayList<>();
+        Optional<CardGroup> cardGroupOptional1 = cardGroupService.findOne(2);//自身项目
+        Optional<CardGroup> cardGroupOptional2 = cardGroupService.findOne(3);//高频
+        cardGroupOutVos.add(cardGroupOptional1.map(CardGroupOutVo::new).orElseGet(() -> new CardGroupOutVo(1)));
+        cardGroupOutVos.add(cardGroupOptional2.map(CardGroupOutVo::new).orElseGet(() -> new CardGroupOutVo(1)));
+        return ReturnBody.success(cardGroupOutVos);
     }
 
     /**

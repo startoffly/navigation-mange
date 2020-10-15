@@ -1,5 +1,6 @@
 package com.xinmove.navigationmange.service.impl;
 
+import com.xinmove.navigationmange.dao.CardGroupRepository;
 import com.xinmove.navigationmange.dao.CardRepository;
 import com.xinmove.navigationmange.entity.Card;
 import com.xinmove.navigationmange.entity.CardGroup;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.Objects.isNull;
 
@@ -18,6 +20,11 @@ public class CardServiceImpl implements CardService {
 
     @Resource
     CardRepository cardRepository;
+
+    @Override
+    public long count() {
+        return cardRepository.count();
+    }
 
     @Override
     public void saveCard(Card card) {
@@ -49,9 +56,29 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public int updateCardAboutCardGroupById(Long cardId, CardGroup cardGroup) {
+    public int addCardAboutCardGroupById(Long cardId, CardGroup cardGroup) {
         try{
-            return cardRepository.updateCardCardGroupTypeById(cardId,cardGroup);
+            Optional<Card> cardOptional = cardRepository.findById(cardId);
+            cardOptional.ifPresent(card -> {
+                card.getCardGroupList().add(cardGroup);
+                cardRepository.save(card);
+            });
+            return 1;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public int deleteCardAboutCardGroupById(Long cardId, CardGroup cardGroup) {
+        try{
+            Optional<Card> cardOptional = cardRepository.findById(cardId);
+            cardOptional.ifPresent(card -> {
+                card.getCardGroupList().remove(cardGroup);
+                cardRepository.save(card);
+            });
+            return 1;
         }catch (Exception e){
             e.printStackTrace();
         }
