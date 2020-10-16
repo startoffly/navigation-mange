@@ -3,6 +3,7 @@ package com.xinmove.navigationmange.service;
 import com.xinmove.navigationmange.entity.Card;
 import com.xinmove.navigationmange.entity.CardGroup;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -15,6 +16,8 @@ public interface CardGroupService {
     long count();
 
     Optional<CardGroup> findOne(int gid);
+
+    List<CardGroup> findAllOrderByRankDesc();
 
     /**
      * 添加一个分组

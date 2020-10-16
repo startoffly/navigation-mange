@@ -6,10 +6,12 @@ import com.xinmove.navigationmange.entity.CardGroup;
 import com.xinmove.navigationmange.service.CardGroupService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,6 +34,11 @@ public class CardGroupServiceImpl implements CardGroupService {
     @Override
     public Optional<CardGroup> findOne(int gid){
         return cardGroupRepository.findByGid(gid);
+    }
+
+    @Override
+    public List<CardGroup> findAllOrderByRankDesc() {
+        return cardGroupRepository.findAll(Sort.by(Sort.Direction.DESC,"rank"));
     }
 
     @Override

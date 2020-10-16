@@ -52,7 +52,7 @@ public class TestController {
     @CrossOrigin
     @ResponseBody
     @GetMapping(value = "/getCardsByGroup")
-    public ReturnBody getHomeInfo(@Param("gids")int[] gids){
+    public ReturnBody getHomeInfo(@RequestParam(value = "gids") Integer[] gids){
         List<CardGroupOutVo> cardGroupOutVos = new ArrayList<>();
         for (int gid : gids) {
             Optional<CardGroup> cardGroupOptional1 = cardGroupService.findOne(gid);
@@ -60,6 +60,18 @@ public class TestController {
         }
         return ReturnBody.success(cardGroupOutVos);
     }
+
+    @CrossOrigin
+    @ResponseBody
+    @GetMapping(value = "/getCardsByGroupAll")
+    public ReturnBody getHomeInfoAll(){
+        List<CardGroupOutVo> cardGroupOutVos = new ArrayList<>();
+        for (CardGroup cardGroup : cardGroupService.findAllOrderByRankDesc()) {
+            cardGroupOutVos.add(new CardGroupOutVo(cardGroup));
+        }
+        return ReturnBody.success(cardGroupOutVos);
+    }
+
 
     /**
      * 测试数据

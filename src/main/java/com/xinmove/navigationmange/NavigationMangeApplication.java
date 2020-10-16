@@ -30,7 +30,7 @@ public class NavigationMangeApplication {
                 System.out.println("未检测到数据，进入初始化...");
                 //初始化些测试数据
                 CardGroup cardGroup0 = new CardGroup("默认分组","fa fa-clone","这是一个默认分组",0,0);
-                CardGroup cardGroup1 = new CardGroup("我的项目","fa fa-hand-peace-o","我的项目",0,1);
+                CardGroup cardGroup1 = new CardGroup("我的项目","fa fa-hand-peace-o","我的项目",0,2);
                 CardGroup cardGroup2 = new CardGroup("高频使用","fa fa-free-code-camp","高频使用",0,1);
                 cardGroupService.saveCardGroup(cardGroup0);
                 cardGroupService.saveCardGroup(cardGroup1);
