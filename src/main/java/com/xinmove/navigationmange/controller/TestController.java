@@ -52,11 +52,22 @@ public class TestController {
     @CrossOrigin
     @ResponseBody
     @GetMapping(value = "/getCardsByGroup")
-    public ReturnBody getHomeInfo(@RequestParam(value = "gids") Integer[] gids){
+    public ReturnBody getCardsByGroup(@RequestParam(value = "gids") Integer[] gids){
         List<CardGroupOutVo> cardGroupOutVos = new ArrayList<>();
         for (int gid : gids) {
             Optional<CardGroup> cardGroupOptional1 = cardGroupService.findOne(gid);
             cardGroupOutVos.add(cardGroupOptional1.map(CardGroupOutVo::new).orElseGet(() -> new CardGroupOutVo(1)));
+        }
+        return ReturnBody.success(cardGroupOutVos);
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @GetMapping(value = "/getCardsNoGroup")
+    public ReturnBody getCardsNoGroup(@RequestParam(value = "gids") int[] gids){
+        List<CardGroupOutVo> cardGroupOutVos = new ArrayList<>();
+        for (CardGroup cardGroup : cardGroupService.findNoGroup(gids)) {
+            cardGroupOutVos.add(new CardGroupOutVo(cardGroup));
         }
         return ReturnBody.success(cardGroupOutVos);
     }

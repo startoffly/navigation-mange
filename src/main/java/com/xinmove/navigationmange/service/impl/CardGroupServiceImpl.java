@@ -42,6 +42,11 @@ public class CardGroupServiceImpl implements CardGroupService {
     }
 
     @Override
+    public List<CardGroup> findNoGroup(int[] gids) {
+        return cardGroupRepository.findByGidNotIn(gids);
+    }
+
+    @Override
     public void saveCardGroup(CardGroup cardGroup) {
         cardGroup.setRank(cardGroupRepository.findMaxRank());
         cardGroupRepository.save(cardGroup);

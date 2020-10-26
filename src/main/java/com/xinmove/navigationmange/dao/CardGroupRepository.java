@@ -16,6 +16,8 @@ public interface CardGroupRepository extends JpaRepository<CardGroup,Integer> {
 
     Optional<CardGroup> findByGid(Integer id);
 
+    List<CardGroup> findByGidNotIn(int[] gids);
+
     @Override
     void deleteAll();
 

@@ -19,6 +19,8 @@ public interface CardGroupService {
 
     List<CardGroup> findAllOrderByRankDesc();
 
+    List<CardGroup> findNoGroup(int[] gids);
+
     /**
      * 添加一个分组
      * @param cardGroup
